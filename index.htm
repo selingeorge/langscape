@@ -1,0 +1,114 @@
+<! DOCTYPE html>
+<html>
+<head>
+<title>Langscape - Assessment - 1</title>
+</head>
+<body>
+
+<h1>Langscape - Assessment - 1</h1>
+
+<form action="javascript:void(0);">
+<label>User Input</label><br>
+<textarea id="inputbox" cols="40"></textarea><br>
+</form>
+
+<button onclick="WordCounts()">Word Counts</button>
+<button onclick="Uniquewords()">Unique Words</button>
+<button onclick="TitleInputText()">Title Input Text</button>
+
+<form action="javascript:void(0);">
+<br><label>Result for the selected action</label><br>
+<textarea id="resultbox" cols="40"></textarea><br>
+</form>
+
+
+
+<script>
+
+// Word Counts
+function WordCounts() {
+	// Clear the resultbox to make a fresh start
+	document.getElementById("resultbox").value = "";
+	
+	// Get the input text
+	var text = document.getElementById("inputbox").value.trim();
+
+	// Split the string using whitespaces, and get the length of the result, which is an array
+	document.getElementById("resultbox").value = text.split(/\s+|,/).length;
+}
+
+// Unique Words
+function Uniquewords() {
+	// Clear the resultbox to make a fresh start
+	document.getElementById("resultbox").value = "";
+
+	// Remove the whitespaces from both sides
+	var text = document.getElementById("inputbox").value.trim();
+
+	// Split using whitespaces (Regular expression)
+	var resArray = text.split(/\s+|,/);
+	var uniqueArray = [];
+	var res = "";
+	
+	// Iterate over the result array
+	for(i = 0; i < resArray.length; i++) {
+		// Assume the value is unique by setting a flag to true
+		var flag = true;
+		// Iterate over the unique array
+		for (j = 0; j < uniqueArray.length; j++) {
+			// If the current result array element is found in unique array, set the flag to false, and break the loop
+			if (resArray[i].toLowerCase() === uniqueArray[j].toLowerCase()) {
+				flag = false;
+				break;
+			}
+		}
+		
+		if (flag) {
+			uniqueArray.push(resArray[i]);
+			
+			// remove any exta space insertion for the first iteration. Otherwise an additional empty string is added
+			if (i == 0) {
+				res = resArray[i].toLowerCase();
+			} else {
+				res += " " + resArray[i].toLowerCase();
+			}
+		}
+	}
+	document.getElementById("resultbox").value = res;
+}
+
+// Title Case
+function TitleInputText() {
+	// Clear the resultbox to make a fresh start
+	document.getElementById("resultbox").value = "";
+	
+	// Get the input text
+	var text = document.getElementById("inputbox").value;
+	
+	// Split using whitespace
+	var resArray = text.split(/\s|,/);
+	var res = "";
+	var temp = "";
+	// Iterate over the array
+	for(i = 0; i < resArray.length; i++) {
+		// If each word is more than one character length, upper case the first character, and lower case the remaining characters
+		if (resArray[i].length > 1) {
+			temp = resArray[i].substring(0,1).toUpperCase() + resArray[i].substring(1).toLowerCase();
+			// Otherwise, change it to upper case
+		} else {
+			temp = resArray[i].toUpperCase();
+		}
+		// remove any exta space insertion for the first iteration. Otherwise an additional empty string is added
+		if (i == 0) {
+			res = temp;
+		} else {
+			res += " " + temp;
+		}
+	}
+	// Assign the reconstructed string
+	document.getElementById("resultbox").value = res;
+}
+
+</script>
+</body>
+</html>
